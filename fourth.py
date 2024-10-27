@@ -2,44 +2,44 @@ def je_tah_mozny(figurka, cilova_pozice, obsazene_pozice):
     typ = figurka["typ"]
     pozice = figurka["pozice"]
     
-    # 1. Kontrola, zda cilova_pozice není mimo šachovnici
+    
     if not (1 <= cilova_pozice[0] <= 8 and 1 <= cilova_pozice[1] <= 8):
         return False
 
-    # 2. Kontrola, zda je cilova_pozice volná
+    
     if cilova_pozice in obsazene_pozice:
         return False
 
-    # 3. Implementace pravidel pohybu pro různé figury
+    
     if typ == "pěšec":
-        # Pěšec: pohyb o 1 pole vpřed nebo o 2 pole při prvním tahu
-        if pozice[1] == cilova_pozice[1]:  # pohyb v sloupci
+        
+        if pozice[1] == cilova_pozice[1]:  
             if cilova_pozice[0] == pozice[0] + 1 and (pozice[0] + 1, pozice[1]) not in obsazene_pozice:
-                return True  # jedno pole vpřed
+                return True  
             if pozice[0] == 2 and cilova_pozice[0] == pozice[0] + 2:
-                return (pozice[0] + 1, pozice[1]) not in obsazene_pozice  # dvě pole vpřed při startu
+                return (pozice[0] + 1, pozice[1]) not in obsazene_pozice  
 
     elif typ == "jezdec":
-        # Jezdec: pohyb ve tvaru "L"
+        
         radkovy_rozdil = abs(pozice[0] - cilova_pozice[0])
         sloupcovy_rozdil = abs(pozice[1] - cilova_pozice[1])
         return (radkovy_rozdil, sloupcovy_rozdil) in [(2, 1), (1, 2)]
 
     elif typ == "věž":
-        # Věž: pohyb v řádku nebo sloupci s kontrolou překážek
-        if pozice[0] == cilova_pozice[0]:  # pohyb ve sloupci
+        
+        if pozice[0] == cilova_pozice[0]:  
             for y in range(min(pozice[1], cilova_pozice[1]) + 1, max(pozice[1], cilova_pozice[1])):
                 if (pozice[0], y) in obsazene_pozice:
                     return False
             return True
-        elif pozice[1] == cilova_pozice[1]:  # pohyb v řádku
+        elif pozice[1] == cilova_pozice[1]:  
             for x in range(min(pozice[0], cilova_pozice[0]) + 1, max(pozice[0], cilova_pozice[0])):
                 if (x, pozice[1]) in obsazene_pozice:
                     return False
             return True
 
     elif typ == "střelec":
-        # Střelec: diagonální pohyb s kontrolou překážek
+        
         if abs(pozice[0] - cilova_pozice[0]) == abs(pozice[1] - cilova_pozice[1]):
             dx = 1 if cilova_pozice[0] > pozice[0] else -1
             dy = 1 if cilova_pozice[1] > pozice[1] else -1
@@ -49,14 +49,14 @@ def je_tah_mozny(figurka, cilova_pozice, obsazene_pozice):
             return True
 
     elif typ == "dáma":
-        # Dáma: kombinace pohybu věže a střelce
+        
         if pozice[0] == cilova_pozice[0] or pozice[1] == cilova_pozice[1]:
             return je_tah_mozny({"typ": "věž", "pozice": pozice}, cilova_pozice, obsazene_pozice)
         elif abs(pozice[0] - cilova_pozice[0]) == abs(pozice[1] - cilova_pozice[1]):
             return je_tah_mozny({"typ": "střelec", "pozice": pozice}, cilova_pozice, obsazene_pozice)
 
     elif typ == "král":
-        # Král: pohyb o jedno pole ve všech směrech
+        
         return max(abs(pozice[0] - cilova_pozice[0]), abs(pozice[1] - cilova_pozice[1])) == 1
 
     return False
