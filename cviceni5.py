@@ -1,15 +1,39 @@
 import sys
+import csv
 
 def nacti_csv(soubor):
-    pass
+    data = []
+    with open(soubor, "r") as fp:
+        reader = csv.reader(fp)
+        for row in reader:
+            data.append(row)
+    return data
 
 
 def spoj_data(*data):
-    pass
+    vysledek = {}
+    for d in data:
+        for i, v in enumerate(d):
+            if i == 0:
+                continue
+            if v[1] not in vysledek:
+                vysledek[v[1]] = v
+            else:
+                vysledek[v[1]].extend(v)
+    return vysledek
 
 
 def zapis_csv(soubor, data):
-    pass
+    data = [
+
+
+
+
+    ]
+
+
+
+    
 
 
 if __name__ == "__main__":
@@ -18,7 +42,11 @@ if __name__ == "__main__":
         soubor2 = sys.argv[2]
         csv_data1 = nacti_csv(soubor1)
         csv_data2 = nacti_csv(soubor2)
+        print (vysledna_data)
+        
         vysledna_data = spoj_data(csv_data1, csv_data2)
-        zapis_csv(vysledna_data)
-    except Exception:
-        pass
+        zapis_csv("vyslednyexcel.csv", vysledna_data)
+    except IndexError:
+        print("Zadej 2 soubory csv")
+    except FileExistsError:
+        print("Soubor neexistuje")
