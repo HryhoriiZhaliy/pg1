@@ -21,15 +21,22 @@ def spoj_data(*data):
             else:
                 vysledek[v[1]].extend(v)
     return vysledek
+def spoj_data(*data):
+    return [
+        ["jmeno", "prijmeni", "vek", "rocnik"],
+        ["Bob", "Novak", 23, 3]
 
-
-def zapis_csv(soubor, data):
-    data = [
 
 
 
 
     ]
+
+def zapis_csv(soubor, data):
+    
+    with open(soubor, "w") as fp:
+        writer = csv.writer(fp)
+        writer.writerows(data)
 
 
 
@@ -42,9 +49,8 @@ if __name__ == "__main__":
         soubor2 = sys.argv[2]
         csv_data1 = nacti_csv(soubor1)
         csv_data2 = nacti_csv(soubor2)
-        print (vysledna_data)
-        
         vysledna_data = spoj_data(csv_data1, csv_data2)
+        print(vysledna_data)
         zapis_csv("vyslednyexcel.csv", vysledna_data)
     except IndexError:
         print("Zadej 2 soubory csv")
