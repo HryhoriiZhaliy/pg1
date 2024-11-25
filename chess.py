@@ -2,23 +2,13 @@ from abc import ABC, abstractmethod
 
 class Piece(ABC):
     def __init__(self, color, position):
-        """
-        Inicializuje šachovou figurku.
         
-        :param color: Barva figurky ('white' nebo 'black').
-        :param position: Aktuální pozice na šachovnici jako tuple (row, col).
-        """
         self.__color = color
         self.__position = position
 
     @abstractmethod
     def possible_moves(self):
-        """
-        Vrací všechny možné pohyby figurky.
-        Musí být implementováno v podtřídách.
         
-        :return: Seznam možných pozic [(row, col), ...].
-        """
         pass
 
     @staticmethod
@@ -43,11 +33,7 @@ class Piece(ABC):
 
 class Pawn(Piece):
     def possible_moves(self):
-        """
-        Vrací všechny možné tahy pěšáka. Zohledňuje pouze tahy vpřed.
         
-        :return: Seznam možných pozic [(row, col), ...].
-        """
         row, col = self.position
         direction = 1 if self.color == "white" else -1
         moves = [(row + direction, col)]
@@ -59,11 +45,7 @@ class Pawn(Piece):
 
 class Knight(Piece):
     def possible_moves(self):
-        """
-        Vrací všechny možné tahy jezdce.
         
-        :return: Seznam možných pozic [(row, col), ...].
-        """
         row, col = self.position
         moves = [
             (row + 2, col + 1), (row + 2, col - 1),
@@ -79,11 +61,7 @@ class Knight(Piece):
 
 class Bishop(Piece):
     def possible_moves(self):
-        """
-        Vrací všechny možné tahy střelce.
         
-        :return: Seznam možných pozic [(row, col), ...].
-        """
         row, col = self.position
         moves = []
         for i in range(1, 8):
@@ -97,11 +75,7 @@ class Bishop(Piece):
 
 class Rook(Piece):
     def possible_moves(self):
-        """
-        Vrací všechny možné tahy věže.
         
-        :return: Seznam možných pozic [(row, col), ...].
-        """
         row, col = self.position
         moves = []
         for i in range(1, 8):
@@ -114,11 +88,7 @@ class Rook(Piece):
 
 class Queen(Piece):
     def possible_moves(self):
-        """
-        Vrací všechny možné tahy královny (věž + střelec).
-        
-        :return: Seznam možných pozic [(row, col), ...].
-        """
+       
         row, col = self.position
         moves = []
         for i in range(1, 8):
@@ -133,11 +103,7 @@ class Queen(Piece):
 
 class King(Piece):
     def possible_moves(self):
-        """
-        Vrací všechny možné tahy krále.
         
-        :return: Seznam možných pozic [(row, col), ...].
-        """
         row, col = self.position
         moves = [
             (row + 1, col), (row - 1, col),
