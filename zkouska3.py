@@ -31,4 +31,9 @@ def test_shapes():
     circle = Circle(3)
     assert round(circle.area(), 1) == 28.3  
     
-    
+    try:
+        shape = Shape()  
+    except TypeError:
+        pass  
+    else:
+        assert False, "TypeError"
